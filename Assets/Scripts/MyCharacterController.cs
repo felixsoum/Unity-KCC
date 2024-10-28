@@ -36,6 +36,7 @@ public class MyCharacterController : MonoBehaviour, ICharacterController
 
     private Vector3 _moveInputVector;
     private Vector3 _lookInputVector;
+    internal bool hasFlashlight;
 
     private void Start()
     {

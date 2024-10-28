@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class OldDoor : MonoBehaviour, IInteractable
@@ -8,9 +6,13 @@ public class OldDoor : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (FindAnyObjectByType<MyPlayer>().HasOldKey && door != null)
+        if (FindAnyObjectByType<MyPlayer>().HasOldKey)
         {
-            Destroy(door);
+            GetComponent<Animator>().SetTrigger("Open");
+        }
+        else
+        {
+            FindAnyObjectByType<SubtitleText>().ShowText("La porte est verouillé", 5f);
         }
     }
 }
