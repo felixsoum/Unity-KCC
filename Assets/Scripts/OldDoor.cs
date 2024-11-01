@@ -6,9 +6,13 @@ public class OldDoor : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        if (FindAnyObjectByType<MyPlayer>().HasOldKey)
+
+        MyPlayer myPlayer = FindAnyObjectByType<MyPlayer>();
+
+        if (myPlayer.HasOldKey)
         {
             GetComponent<Animator>().SetTrigger("Open");
+            myPlayer.DestroyOldKey();
         }
         else
         {

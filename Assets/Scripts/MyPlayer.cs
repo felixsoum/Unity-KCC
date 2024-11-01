@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MyPlayer : MonoBehaviour
 {
+    public GameObject oldKeyObject;
+
     public ExampleCharacterCamera OrbitCamera;
     public Transform CameraFollowPoint;
     public MyCharacterController Character;
@@ -81,6 +83,13 @@ public class MyPlayer : MonoBehaviour
     internal void CollectOldKey()
     {
         hasOldKey = true;
+        oldKeyObject.SetActive(true);
+    }
+
+    internal void DestroyOldKey()
+    {
+        hasOldKey = false;
+        oldKeyObject.SetActive(false);
     }
 
     public bool HasOldKey => hasOldKey;
