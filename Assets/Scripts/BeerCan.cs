@@ -15,7 +15,7 @@ public class BeerCan : MonoBehaviour, IInteractable
         }
 
         ApplyDrunkEffect(true);
-        Invoke(nameof(SoberUp), 5f);
+        Invoke(nameof(SoberUp), 10f);
     }
 
     void Update()

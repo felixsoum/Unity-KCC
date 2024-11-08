@@ -1,6 +1,7 @@
 using KinematicCharacterController.Examples;
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MyPlayer : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class MyPlayer : MonoBehaviour
     public Transform CameraFollowPoint;
     public MyCharacterController Character;
     private bool hasOldKey;
+    private Camera secondaryCamera;
+    private GraphicRaycaster secondaryRaycaster;
     private const string MouseXInput = "Mouse X";
     private const string MouseYInput = "Mouse Y";
     private const string MouseScrollInput = "Mouse ScrollWheel";
@@ -30,10 +33,20 @@ public class MyPlayer : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (secondaryCamera != null)
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Character.RaycastTryToInteract();
+            if (Input.GetMouseButtonDown(1))
+            {
+                ResetCamera();
+            }
+        }
+        else
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                Cursor.lockState = CursorLockMode.Locked;
+                Character.RaycastTryToInteract();
+            }
         }
 
         HandleCharacterInput();
@@ -93,4 +106,29 @@ public class MyPlayer : MonoBehaviour
     }
 
     public bool HasOldKey => hasOldKey;
+
+    public void OnMonitorClick()
+    {
+        Debug.Log("Monitor");
+    }
+
+    internal void SetCamera(Camera camera, UnityEngine.UI.GraphicRaycaster raycaster)
+    {
+        secondaryCamera = camera;
+        secondaryRaycaster = raycaster;
+        secondaryRaycaster.enabled = true;
+        Cursor.lockState = CursorLockMode.Confined;
+        camera.gameObject.SetActive(true);
+        OrbitCamera.gameObject.SetActive(false);
+    }
+
+    internal void ResetCamera()
+    {
+        secondaryCamera.gameObject.SetActive(false);
+        secondaryCamera = null;
+        secondaryRaycaster.enabled = false;
+        secondaryRaycaster = null;
+        Cursor.lockState = CursorLockMode.Locked;
+        OrbitCamera.gameObject.SetActive(true);
+    }
 }
